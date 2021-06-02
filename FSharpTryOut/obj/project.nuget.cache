@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "ll6PasItNItEDGRNO1nZ/X3W2virLyz6s0hp2HLiu4M3OnoCBvjiTD2gkeFEf4qicYMpYnZnXwpw0j0nrMiF5A==",
+  "success": true,
+  "projectFilePath": "/Users/haowang/RiderProjects/FSharpTryOut/FSharpTryOut/FSharpTryOut.fsproj",
+  "expectedPackageFiles": [
+    "/Users/haowang/.nuget/packages/fparsec/1.1.1/fparsec.1.1.1.nupkg.sha512",
+    "/Users/haowang/.nuget/packages/fsharp.core/5.0.0/fsharp.core.5.0.0.nupkg.sha512",
+    "/Users/haowang/.nuget/packages/litedb/5.0.10/litedb.5.0.10.nupkg.sha512",
+    "/Users/haowang/.nuget/packages/microsoft.bcl.asyncinterfaces/1.1.0/microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512",
+    "/Users/haowang/.nuget/packages/orthogonal.persistence/1.0.0/orthogonal.persistence.1.0.0.nupkg.sha512",
+    "/Users/haowang/.nuget/packages/orthogonal.persistence.litedb/1.0.0/orthogonal.persistence.litedb.1.0.0.nupkg.sha512",
+    "/Users/haowang/.nuget/packages/system.linq.async/5.0.0/system.linq.async.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
