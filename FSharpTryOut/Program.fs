@@ -17,9 +17,11 @@ let testFile p path =
 
 [<EntryPoint>]
 let main argv =
-    test pQuestionType "一、单选题"
-    test pQuestionType "一、多选题"
+    test pQuestionType "一、单选题\n"
+    test pQuestionType "一、多选题\n"
     test pCategory "（一）党建理论知识\n"
+    test pStem "1．	党的十九大报告提出的三大攻坚战是指(    )
+"
     //test pCategory "二、 类别"
     //testFile parser "/Users/haowang/Documents/test.txt"
     0 // return an integer exit code
