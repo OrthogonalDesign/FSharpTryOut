@@ -1,5 +1,4 @@
 module FSharpTryOut.Question_Parsers
-open System
 open FParsec
 open Question
 
@@ -40,21 +39,31 @@ let pOption : Parser<Option, unit> =
 
 let pOptions = many pOption
    
-let pAnswerToIndex = function
+let pChoiceToIndex = function
     |'A' -> 0
     |'B' -> 1
     |'C' -> 2
     |'D' -> 3
     |'E' -> 4
     |'F' -> 5
+
     
-let pAnswer : Parser<Answer,unit> =
-    pOptionLetter |>> pAnswerToIndex
-let pAnswers :Parser<Answer list, unit> =
-     many1 pAnswer
+let pChoice : Parser<Choice,unit> =
+    pOptionLetter |>> pChoiceToIndex
+let pChoices :Parser<Choice list, unit> =
+     many1 pChoice
+   
+
+let pAnswer  =
+    pChoices
+    |>> function x ->
+            match x with
+            | s when s.Length = 1 -> SingleChoice(s.[0])
+            | m when m.Length > 1 -> MultipleChoice(m)
     
-let pSingleAnswer : Parser<Section, unit> =
-    skipString "答案：" >>.pAnswer .>> newline |>> function x-> RecommendedAnswer(x)
+let pRecommendedAnswer : Parser<Section, unit> =
+    skipString "答案：" >>. pAnswer .>> newline |>> function x-> RecommendedAnswer(x)
+
     
 //let pMultipleAnswers : Parser<Section, unit> =
  //   skipString "答案：" >>. pOptionLetter .>> newline  |>> pAnswer 
