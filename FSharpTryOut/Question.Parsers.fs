@@ -9,8 +9,10 @@ let chinese_pause = '、'
 let chinese_dot='．'
 let chinese_round_bracket_open = '（'
 let chinese_round_bracket_close = '）'
+let option_letter =[|'A'; 'B'; 'C'; 'D'; 'E'; 'F'|]
 
 let pChineseNumber = anyOf chinese_number
+let pOptionLetter = anyOf option_letter
 let pSkipMany1ChineseNumber :Parser<unit, unit> = skipMany1 pChineseNumber
 
 let parens p = between
@@ -29,4 +31,30 @@ let pQuestionType : Parser<QuestionType,unit> =
         
 let pStem : Parser<Section, unit> =
     pint8 >>. skipChar chinese_dot >>. spaces
-    >>. many1CharsTill anyChar newline |>> string |>> function s -> Stem(s)
+    >>. restOfLine true |>> string |>> function s -> Stem(s)
+    
+   
+let pOption : Parser<Option, unit> =
+    pOptionLetter >>. skipChar chinese_dot >>. many1CharsTill anyChar newline
+    
+
+let pOptions = many pOption
+   
+let pAnswerToIndex = function
+    |'A' -> 0
+    |'B' -> 1
+    |'C' -> 2
+    |'D' -> 3
+    |'E' -> 4
+    |'F' -> 5
+    
+let pAnswer : Parser<Answer,unit> =
+    pOptionLetter |>> pAnswerToIndex
+let pAnswers :Parser<Answer list, unit> =
+     many1 pAnswer
+    
+let pSingleAnswer : Parser<Section, unit> =
+    skipString "答案：" >>.pAnswer .>> newline |>> function x-> RecommendedAnswer(x)
+    
+//let pMultipleAnswers : Parser<Section, unit> =
+ //   skipString "答案：" >>. pOptionLetter .>> newline  |>> pAnswer 
