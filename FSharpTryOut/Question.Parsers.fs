@@ -32,7 +32,7 @@ let pAuthor : Parser<Author, unit> =
     skipString "命题单位：" >>. restOfLine true  
     
 let pStem : Parser<Stem, unit> =
-    pint8 >>. skipChar chinese_dot >>. spaces
+    pint32 >>. skipChar chinese_dot >>. spaces
     >>. restOfLine true 
 
    
