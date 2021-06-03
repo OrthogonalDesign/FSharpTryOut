@@ -28,16 +28,19 @@ let pQuestionType : Parser<QuestionType,unit> =
     pSkipMany1ChineseNumber  >>. skipChar chinese_pause >>.
         choice[pSingleQuestion; pMultipleQuestion] .>> newline
         
-let pStem : Parser<Section, unit> =
-    pint8 >>. skipChar chinese_dot >>. spaces
-    >>. restOfLine true |>> string |>> function s -> Stem(s)
+let pAuthor : Parser<Author, unit> =
+    skipString "命题单位：" >>. restOfLine true  
     
+let pStem : Parser<Stem, unit> =
+    pint8 >>. skipChar chinese_dot >>. spaces
+    >>. restOfLine true 
+
    
 let pOption : Parser<Option, unit> =
     pOptionLetter >>. skipChar chinese_dot >>. many1CharsTill anyChar newline
     
 
-let pOptions = many pOption
+let pOptions: Parser<Option list, unit> = many pOption
    
 let pChoiceToIndex = function
     |'A' -> 0
@@ -57,13 +60,35 @@ let pChoices :Parser<Choice list, unit> =
 let pAnswer  =
     pChoices
     |>> function x ->
-            match x with
+        match x with
             | s when s.Length = 1 -> SingleChoice(s.[0])
             | m when m.Length > 1 -> MultipleChoice(m)
     
-let pRecommendedAnswer : Parser<Section, unit> =
-    skipString "答案：" >>. pAnswer .>> newline |>> function x-> RecommendedAnswer(x)
+let pRecommendedAnswer : Parser<Answer, unit> =
+    skipString "答案：" >>. pAnswer .>> newline
+
+let pAnalysis : Parser<Analysis, unit>  =
+    skipString "解析：" >>. restOfLine true
+
+let pQuestion1 : Parser<Question, unit> =
+  pipe5 pAuthor pStem pOptions pRecommendedAnswer pAnalysis (
+      fun author stem options answer  analysis ->
+          { Author=option.Some(author); Stem=stem; Options=options; RecommendedAnswer=answer; Analysis=analysis })
+ 
+let pQuestion2 : Parser<Question, unit> =
+  pipe4 pStem pOptions pRecommendedAnswer pAnalysis (
+      fun stem options answer  analysis ->
+          {Author=option.None; Stem=stem; Options=options; RecommendedAnswer=answer; Analysis=analysis })
+
+let pQuestion = choice[pQuestion1; pQuestion2]
+    
+let pCategoryPart  =
+    pCategory .>>. many1 pQuestion
+    
+let pQuestionTypePart =
+    pQuestionType .>>. many1 pCategoryPart
+    
+let pDoc = many1 pQuestionTypePart .>> eof
 
     
-//let pMultipleAnswers : Parser<Section, unit> =
- //   skipString "答案：" >>. pOptionLetter .>> newline  |>> pAnswer 
+ 

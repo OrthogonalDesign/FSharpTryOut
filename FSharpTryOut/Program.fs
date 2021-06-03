@@ -32,7 +32,8 @@ let main argv =
     //test pRecommendedAnswer "答案：AC\n"
     //test pAnalysis "解析：根据《劳动合同法》第八十五条规定，用人单位有下列情形之一的，由劳动行政部门责令限期支付劳动报酬、加班费或者经济补偿；劳动报酬低于当地最低工资标准的，应当支付其差额部分；逾期不支付的，责令用人单位按应付金额百分之五十以上百分之一百以下的标准向劳动者加付赔偿金：（一）未按照劳动合同的约定或者国家规定及时足额支付劳动者劳动报酬的；（二）低于当地最低工资标准支付劳动者工资的；（三）安排加班不支付加班费的；（四）解除或者终止劳动合同，未依照本法规定向劳动者支付经济补偿的。\n"
     //test pCategory "二、 类别"
-    testFile pQuestion "/Users/haowang/Documents/question.txt"
+    //test pQuestion1 "1．	党的十九大报告提出的三大攻坚战是指(    )\nA．精准脱贫、防范金融风险、污染防治\n"
+    //testFile pQuestion "/Users/haowang/Documents/question.txt"
     testFile pDoc "/Users/haowang/Documents/test.txt"
     0 // return an integer exit code
     
